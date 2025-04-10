@@ -5,48 +5,54 @@
 
 # Server
 server <- function(input, output) {
-  filtered_data <- reactive({
-    basins %>% filter(AREA >= input$range[1], AREA <= input$range[2])
+  
+  observeEvent(input$select_station, { 
+    
+    filtered_basin <- basins %>% filter(gauge_name == input$select_station)
+
+    output$map <- renderLeaflet({
+      leaflet() %>%
+        addTiles(group = "OpenStreetMap") %>%
+        #
+        addProviderTiles(providers$Esri.NatGeoWorldMap, 
+                         group = "NatGeoWorldMap") %>%
+        #
+        addProviderTiles(
+          providers$Esri.WorldImagery,
+          options = providerTileOptions(opacity = 0.5),
+          group = "WorldImagery"
+        ) %>%
+        #
+        addPolygons(
+          data = filtered_basin, #filtered_data(),
+          label = ~gauge_name,
+          group = "Basin shape",
+          fillColor = "#5d95e2",
+          color = "#000000",
+          weight = 1,
+          fillOpacity = 0.3
+        ) %>%
+        #
+        addCircles(data = stations, 
+                   label = ~gauge_name, 
+                   group = "Gauging station",
+                   fillColor = "#e2655d",
+                   color = "#e2655d",
+                   fillOpacity = 1
+        ) %>% 
+        #
+        addLayersControl(
+          baseGroups = c(
+            "OpenStreetMap", 
+            "NatGeoWorldMap",
+            "WorldImagery"
+          ),
+          overlayGroups = c("Basin shape", "Gauging station"),
+          options = layersControlOptions(collapsed = TRUE)
+        )
+    })
+    
   })
   
-  output$map <- renderLeaflet({
-    leaflet() %>%
-      addTiles(group = "OpenStreetMap") %>%
-      #
-      addProviderTiles(providers$Esri.NatGeoWorldMap, 
-                       group = "NatGeoWorldMap") %>%
-      #
-      addProviderTiles(
-        providers$Esri.WorldImagery,
-        options = providerTileOptions(opacity = 0.5),
-        group = "WorldImagery"
-      ) %>%
-      #
-      addPolygons(
-        data = basins, #filtered_data(),
-        label = ~gauge_name,
-        group = "Basin shape",
-        fillColor = ~colorQuantile("YlOrRd", AREA)(AREA),
-        weight = 1,
-        color = "white",
-        fillOpacity = 0.3
-      ) %>%
-      #
-      addCircles(data = stations, 
-                 label = ~gauge_name, 
-                 group = "Gauging station",
-                 fillOpacity = 1
-                 ) %>% 
-      #
-      addLayersControl(
-        baseGroups = c(
-          "OpenStreetMap", 
-          "NatGeoWorldMap",
-          "WorldImagery"
-        ),
-        overlayGroups = c("Basin shape", "Gauging station"),
-        options = layersControlOptions(collapsed = TRUE)
-      )
-  })
 }
 

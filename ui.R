@@ -3,7 +3,7 @@ ui <- fluidPage(
   titlePanel("OpenFloodHub"),
   sidebarLayout(
     sidebarPanel(
-      selectInput("stations", "Select stations:",
+      selectInput("select_station", "Select stations:",
                   choices = stations$gauge_name
       ),
       #sliderInput("range", "Filter by Area:",
