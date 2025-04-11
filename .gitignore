@@ -1,2 +1,4 @@
 *.nc
 .Rhistory
+data/temp_dir/pr.csv
+test.csv
