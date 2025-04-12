@@ -114,7 +114,8 @@ function(input, output, session) {
                  fillColor = "#e2655d",
                  color = "#e2655d",
                  fillOpacity = 0.5,
-                 stroke = TRUE
+                 stroke = TRUE,
+                 layerId = ~object_id
       )  %>%
       addPolygons(data = basins_de,
                   group = "Basin shape",
@@ -125,31 +126,36 @@ function(input, output, session) {
   })
 
   # Show a popup at the given location
-#  showZipcodePopup <- function(zipcode, lat, lng) {
-#    selectedZip <- allzips[allzips$zipcode == zipcode,]
-#    content <- as.character(tagList(
-#      tags$h4("Score:", as.integer(selectedZip$centile)),
-#      tags$strong(HTML(sprintf("%s, %s %s",
-#        selectedZip$city.x, selectedZip$state.x, selectedZip$zipcode
-#      ))), tags$br(),
-#      sprintf("Median household income: %s", dollar(selectedZip$income * 1000)), tags$br(),
-#      sprintf("Percent of adults with BA: %s%%", as.integer(selectedZip$college)), tags$br(),
-#      sprintf("Adult population: %s", selectedZip$adultpop)
-#    ))
-#    leafletProxy("map") %>% addPopups(lng, lat, content, layerId = zipcode)
-#  }
+  showZipcodePopup <- function(zipcode, lat, lng) {
+    #selectedZip <- allzips[allzips$zipcode == zipcode,]
+    print(zipcode)
+    content <- as.character(tagList(
+      tags$h4("Gauged name:", zipcode),
+      tags$strong(HTML(sprintf("%s, %s %s",999,999,999
+      ))), tags$br(),
+      sprintf("Current streamflow: %s", 999), tags$br(),
+      sprintf("Current precipitation: %s%%", 999), tags$br(),
+      sprintf("Current maximum temperature: %s", 999)
+    ))
+    leafletProxy("map") %>% addPopups(lng, lat, content, layerId = zipcode)
+  }
 
   # When map is clicked, show a popup with city info
-#  observe({
-#    leafletProxy("map") %>% clearPopups()
-#    event <- input$map_shape_click
-#    if (is.null(event))
-#      return()
-#
-#    isolate({
-#      showZipcodePopup(event$id, event$lat, event$lng)
-#    })
-#  })
+  observe({
+    leafletProxy("map") %>% clearPopups()
+    event <- input$map_shape_click
+    if (is.null(event))
+      return()
+
+    isolate({
+      print("not null")
+      print(event$id)
+      #print(input$map_shape_click)
+      print(input$map_click)
+      print("---")
+      showZipcodePopup(event$id, event$lat, event$lng)
+    })
+  })
 
 
   ## Data Explorer ###########################################
