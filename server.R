@@ -104,9 +104,10 @@ function(input, output, session) {
 #      radius <- zipdata[[sizeBy]] / max(zipdata[[sizeBy]]) * 30000
 #    }
     
-    leafletProxy("map", data = stations_de) %>%
+    leafletProxy("map") %>%
       clearShapes() %>%
-      addCircles(lat = ~latitude,
+      addCircles(data = stations_de,
+                 lat = ~latitude,
                  lng = ~longitude,
                  label = ~gauged_name, 
                  group = "Gauging station",
@@ -119,7 +120,9 @@ function(input, output, session) {
                   group = "Basin shape",
                   stroke = TRUE,
                   weight = 1,
-                  label = ~gauged_name)
+                  label = ~gauge_id
+                  )
+    #print(input$map_shape_click)
   })
 
   # Show a popup at the given location
