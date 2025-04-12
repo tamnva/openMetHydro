@@ -18,6 +18,12 @@ basins <- st_transform(basins, '+proj=longlat +datum=WGS84')
 
 stations <- st_read(file.path("data", "stations.shp"), quiet = TRUE)
 stations <- st_transform(stations, '+proj=longlat +datum=WGS84')
+
+#saveRDS(tibble(object_id = stations$gauge_id,
+#       gauge_name = stations$gauge_name, 
+#       long =  st_coordinates(stations)[,1],
+#       lat =  st_coordinates(stations)[,2]), "C:/Users/nguyenta/Documents/GitHub/openMetHydro/data/stations.rds")
+
 #stations <- stations[c(1:10),]
 
 # Download germany data

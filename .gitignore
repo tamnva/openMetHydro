@@ -2,3 +2,9 @@
 .Rhistory
 data/temp_dir/pr.csv
 test.csv
+data/zip_codes_states.csv
+data/superzip.rds
+data/superzip.csv
+data/stations.rds
+data/-revisedmurrayfile_111952895138.xls
+data/deps.sh
