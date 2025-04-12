@@ -93,6 +93,8 @@ function(input, output, session) {
 #        fillOpacity = 0.3
 #      )
 #  })
+  
+  
   observe({
 #    colorBy <- input$color
 #    sizeBy <- input$size
@@ -124,7 +126,7 @@ function(input, output, session) {
                  color = "#e2655d",
                  fillOpacity = 0.5,
                  stroke = TRUE
-      ) 
+      )  
   })
 
   # Show a popup at the given location

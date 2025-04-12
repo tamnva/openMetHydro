@@ -3,28 +3,27 @@ library(leaflet)
 library(sf)
 library(dplyr)
 library(rdwd)
-
 library(terra)
 library(sf)
 library(exactextractr)
 library(data.table)
 
+#setwd("C:/Users/nguyenta/Documents/GitHub/openMetHydro")
+
+stations_de <- readRDS("data/stations_de.rds")
+basins_de <- st_read("data/basins_de.shp")
+basins_de <- st_transform(basins_de, "+proj=longlat +datum=WGS84")
+
+
 # Load spatial data - using US basins shapefile from 'sf' package
-setwd("C:/Users/nguyenta/Documents/GitHub/openMetHydro")
-basins <- st_read(file.path("data", "catchments.shp"), quiet = TRUE)
-basins$AREA <- as.numeric(st_area(basins)/10^6)
-basins$NAME <- basins$gauge_id
-basins <- st_transform(basins, '+proj=longlat +datum=WGS84')
+#setwd("C:/Users/nguyenta/Documents/GitHub/openMetHydro")
+#basins <- st_read(file.path("data", "catchments.shp"), quiet = TRUE)
+#basins$AREA <- as.numeric(st_area(basins)/10^6)
+#basins$NAME <- basins$gauge_id
+#basins <- st_transform(basins, '+proj=longlat +datum=WGS84')
 
-stations <- st_read(file.path("data", "stations.shp"), quiet = TRUE)
-stations <- st_transform(stations, '+proj=longlat +datum=WGS84')
-
-#saveRDS(tibble(object_id = stations$gauge_id,
-#       gauge_name = stations$gauge_name, 
-#       long =  st_coordinates(stations)[,1],
-#       lat =  st_coordinates(stations)[,2]), "C:/Users/nguyenta/Documents/GitHub/openMetHydro/data/stations.rds")
-
-#stations <- stations[c(1:10),]
+#stations <- st_read(file.path("data", "stations.shp"), quiet = TRUE)
+#stations <- st_transform(stations, '+proj=longlat +datum=WGS84')
 
 # Download germany data
 get_dwd_hyras <- function(years, save_dir){
