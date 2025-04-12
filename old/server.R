@@ -1,14 +1,16 @@
-#library(shiny)
-#library(leaflet)
-#library(sf)
-#library(dplyr)
+library(shiny)
+library(leaflet)
+library(sf)
+library(dplyr)
+
+setwd("C:/Users/nguyenta/Documents/GitHub/openMetHydro")
+basins <- st_read("C:/Users/nguyenta/Documents/GitHub/openMetHydro/old/basins_de.shp", quiet = TRUE)
+basins <- st_transform(basins, '+proj=longlat +datum=WGS84')
 
 # Server
 server <- function(input, output) {
   
   observeEvent(input$select_station, { 
-    
-    filtered_basin <- basins %>% filter(gauge_name == input$select_station)
 
     output$map <- renderLeaflet({
       leaflet() %>%
@@ -21,25 +23,8 @@ server <- function(input, output) {
           providers$Esri.WorldImagery,
           options = providerTileOptions(opacity = 0.5),
           group = "WorldImagery"
+        
         ) %>%
-        #
-        addPolygons(
-          data = filtered_basin, #filtered_data(),
-          label = ~gauge_name,
-          group = "Basin shape",
-          fillColor = "#5d95e2",
-          color = "#000000",
-          weight = 1,
-          fillOpacity = 0.3
-        ) %>%
-        #
-        addCircles(data = stations, 
-                   label = ~gauge_name, 
-                   group = "Gauging station",
-                   fillColor = "#e2655d",
-                   color = "#e2655d",
-                   fillOpacity = 1
-        ) %>% 
         #
         addLayersControl(
           baseGroups = c(
@@ -47,7 +32,7 @@ server <- function(input, output) {
             "NatGeoWorldMap",
             "WorldImagery"
           ),
-          overlayGroups = c("Basin shape", "Gauging station"),
+          overlayGroups = c("Basin shape"),
           options = layersControlOptions(collapsed = TRUE)
         )
     })

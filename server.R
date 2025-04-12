@@ -80,19 +80,7 @@ function(input, output, session) {
 #  # This observer is responsible for maintaining the circles and legend,
 #  # according to the variables the user has chosen to map to color and size.
   
-#  obseved({
-#    leafletProxy("map") %>%
-#      clearShapes() %>%
-#      addPolygons(
-#        data = basins_de,
-#        label = ~gauge_name,
-#        group = "Basins",
-#        fillColor = "#5d95e2",
-#        color = "#000000",
-#        weight = 1,
-#        fillOpacity = 0.3
-#      )
-#  })
+
   
   
   observe({
@@ -126,7 +114,9 @@ function(input, output, session) {
                  color = "#e2655d",
                  fillOpacity = 0.5,
                  stroke = TRUE
-      )  
+      )  %>%
+      addPolygons(data = basins_de,
+                  group = "Basin shape")
   })
 
   # Show a popup at the given location

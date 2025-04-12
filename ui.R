@@ -91,5 +91,5 @@ navbarPage(
     DT::dataTableOutput("ziptable")
   ),
   
-  conditionalPanel("false", icon("crosshair"))
+  #conditionalPanel("false", icon("crosshair"))
 )

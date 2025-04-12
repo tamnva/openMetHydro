@@ -12,7 +12,7 @@ library(data.table)
 
 stations_de <- readRDS("data/stations_de.rds")
 basins_de <- st_read("data/basins_de.shp")
-basins_de <- st_transform(basins_de, "+proj=longlat +datum=WGS84")
+basins_de <- st_transform(basins_de, "+proj=longlat +datum=WGS84")[1:100,]
 
 
 # Load spatial data - using US basins shapefile from 'sf' package
