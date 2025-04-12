@@ -116,7 +116,10 @@ function(input, output, session) {
                  stroke = TRUE
       )  %>%
       addPolygons(data = basins_de,
-                  group = "Basin shape")
+                  group = "Basin shape",
+                  stroke = TRUE,
+                  weight = 1,
+                  label = ~gauged_name)
   })
 
   # Show a popup at the given location
