@@ -32,8 +32,6 @@ navbarPage(
                     height="100%"),
       
       # Shiny versions prior to 0.11 should use class = "modal" instead.
-      #absolutePanel(draggable=T, width='600px', wellPanel(
-        
       absolutePanel(
         id = "controls", 
         class = "panel panel-default", 
@@ -43,7 +41,7 @@ navbarPage(
         left = "auto", 
         right = 0, 
         bottom = "auto",
-        width = 900, 
+        width = 300, 
         height = "auto",
         
         h4("Weather & Streamflow Explorer"),
