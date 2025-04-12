@@ -109,7 +109,7 @@ function(input, output, session) {
       addCircles(data = stations_de,
                  lat = ~latitude,
                  lng = ~longitude,
-                 label = ~gauged_name, 
+                 label = ~object_id, 
                  group = "Gauging station",
                  fillColor = "#e2655d",
                  color = "#e2655d",
@@ -119,8 +119,7 @@ function(input, output, session) {
       addPolygons(data = basins_de,
                   group = "Basin shape",
                   stroke = TRUE,
-                  weight = 1,
-                  label = ~gauge_id
+                  weight = 1
                   )
     #print(input$map_shape_click)
   })
