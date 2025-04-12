@@ -3,6 +3,7 @@ library(RColorBrewer)
 library(scales)
 library(lattice)
 library(dplyr)
+library(ggplot2)
 
 # Leaflet bindings are a bit slow; for now we'll just sample to compensate
 set.seed(100)
@@ -151,7 +152,13 @@ function(input, output, session) {
     isolate({
       showZipcodePopup(event$id, event$lat, event$lng)
       
-        output$histCentile <- renderPlot({
+        output$histCentile <- renderPlotly({
+          plot_ly(data=mtcars, type='scatter', mode='markers', x=~hp, y=~mpg, name=~cyl)
+        })
+        
+        output$scatterCollegeIncome <- renderPlot({
+            ggplot(data.frame(value=rnorm(1000)), aes(x=value)) + 
+              geom_histogram()
           # If no zipcodes are in view, don't plot
           plot(c(1:100), c(1:100), xlab = event$id)
         })

@@ -32,23 +32,25 @@ navbarPage(
                     height="100%"),
       
       # Shiny versions prior to 0.11 should use class = "modal" instead.
+      #absolutePanel(draggable=T, width='600px', wellPanel(
+        
       absolutePanel(
         id = "controls", 
         class = "panel panel-default", 
         fixed = TRUE,
-        draggable = TRUE, 
-        top = 60, 
+        draggable = FALSE, 
+        top = 0, 
         left = "auto", 
-        right = 20, 
+        right = 0, 
         bottom = "auto",
-        width = 300, 
+        width = 900, 
         height = "auto",
         
         h4("Weather & Streamflow Explorer"),
         
-        selectInput("color", 
-                    "Color", 
-                    vars),
+        selectInput("countries", 
+                    "Select country", 
+                    list("Germany", "US", "Switzerland")),
         
         selectInput("size", 
                     "Size", 
@@ -63,7 +65,7 @@ navbarPage(
                                       5)
         ),
         
-        plotOutput("histCentile", height = 200),
+        plotlyOutput(outputId = "histCentile", height = 200),
         plotOutput("scatterCollegeIncome", height = 250)
       ),
       
