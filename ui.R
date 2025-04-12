@@ -37,9 +37,9 @@ navbarPage(
         class = "panel panel-default", 
         fixed = TRUE,
         draggable = FALSE, 
-        top = 0, 
+        top = 70, 
         left = "auto", 
-        right = 0, 
+        right = 20, 
         bottom = "auto",
         width = 300, 
         height = "auto",
@@ -52,12 +52,6 @@ navbarPage(
         
         plotlyOutput(outputId = "histCentile", height = 200),
         plotOutput("scatterCollegeIncome", height = 250)
-      ),
-      
-      tags$div(id="cite",
-               'Data compiled for ', 
-               tags$em('Coming Apart: The State of White America, 1960–2010'), 
-               'by Charles Murray (Crown Forum, 2012).'
       )
     )
   ),
