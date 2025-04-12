@@ -1,4 +1,5 @@
 library(shiny)
+library(plotly)
 library(leaflet)
 library(sf)
 library(dplyr)

@@ -38,6 +38,7 @@ function(input, output, session) {
 
   # A reactive expression that returns the set of zips that are
   # in bounds right now
+  
 #  zipsInBounds <- reactive({
 #    
 #    if (is.null(input$map_bounds))
@@ -130,7 +131,7 @@ function(input, output, session) {
     #selectedZip <- allzips[allzips$zipcode == zipcode,]
     print(zipcode)
     content <- as.character(tagList(
-      tags$h4("Gauged name:", zipcode),
+      tags$h5("Gauged name:", zipcode),
       tags$strong(HTML(sprintf("%s, %s %s",999,999,999
       ))), tags$br(),
       sprintf("Current streamflow: %s", 999), tags$br(),
@@ -148,12 +149,13 @@ function(input, output, session) {
       return()
 
     isolate({
-      print("not null")
-      print(event$id)
-      #print(input$map_shape_click)
-      print(input$map_click)
-      print("---")
       showZipcodePopup(event$id, event$lat, event$lng)
+      
+        output$histCentile <- renderPlot({
+          # If no zipcodes are in view, don't plot
+          plot(c(1:100), c(1:100), xlab = event$id)
+        })
+      
     })
   })
 
