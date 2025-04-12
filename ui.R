@@ -11,7 +11,7 @@ vars <- c(
 
 
 navbarPage(
-  "Superzip", 
+  "Open weather & flood hub", 
   id="nav",
   
   tabPanel(
@@ -85,14 +85,6 @@ navbarPage(
                          choices = list("Germany", "Switzerland"), 
                          selected = "Germany",
                          multiple=TRUE)
-      )
-    ),
-    fluidRow(
-      column(1,
-             numericInput("minScore", "Min score", min=0, max=100, value=0)
-      ),
-      column(1,
-             numericInput("maxScore", "Max score", min=0, max=100, value=100)
       )
     ),
     hr(),

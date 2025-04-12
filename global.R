@@ -1,13 +1,8 @@
 library(dplyr)
+library(sf)
 
 #setwd("C:/Users/nguyenta/Documents/GitHub/openMetHydro")
 
-stations <- readRDS("data/stations.rds")
+stations_de <- readRDS("data/stations_de.rds")
+basins_de <- st_read("data/basins_de.shp")
 
-clean_stations <- stations %>%
-  select(
-    Object_ID = object_id,
-    Gauged_Name = gauged_name,
-    Latitude = latitude,
-    Longitude = longitude
-  )

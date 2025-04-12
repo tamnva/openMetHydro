@@ -79,6 +79,20 @@ function(input, output, session) {
 #
 #  # This observer is responsible for maintaining the circles and legend,
 #  # according to the variables the user has chosen to map to color and size.
+  
+#  obseved({
+#    leafletProxy("map") %>%
+#      clearShapes() %>%
+#      addPolygons(
+#        data = basins_de,
+#        label = ~gauge_name,
+#        group = "Basins",
+#        fillColor = "#5d95e2",
+#        color = "#000000",
+#        weight = 1,
+#        fillOpacity = 0.3
+#      )
+#  })
   observe({
 #    colorBy <- input$color
 #    sizeBy <- input$size
@@ -100,10 +114,11 @@ function(input, output, session) {
 #      radius <- zipdata[[sizeBy]] / max(zipdata[[sizeBy]]) * 30000
 #    }
     
-    leafletProxy("map") %>%
+    leafletProxy("map", data = stations_de) %>%
       clearShapes() %>%
-      addCircles(data = stations, 
-                 label = ~gauge_name, 
+      addCircles(lat = ~latitude,
+                 lng = ~longitude,
+                 #label = ~gauge_name, 
                  group = "Gauging station",
                  fillColor = "#e2655d",
                  color = "#e2655d",
@@ -183,18 +198,7 @@ function(input, output, session) {
 #    })
 #  })
 
-#  output$ziptable <- DT::renderDataTable({
-#    df <- clean_stations %>%
-#      filter(
-#        Score >= input$minScore,
-#        Score <= input$maxScore,
-#        is.null(input$states) | State %in% input$states,
-#        is.null(input$cities) | City %in% input$cities,
-#        is.null(input$zipcodes) | Zipcode %in% input$zipcodes
-#      ) %>%
-#      mutate(Action = paste('<a class="go-map" href="" data-lat="', Lat, '" data-long="', Long, '" data-zip="', Zipcode, '"><i class="fa fa-crosshairs"></i></a>', sep=""))
-#    action <- DT::dataTableAjax(session, df, outputId = "ziptable")
-
-#    DT::datatable(df, options = list(ajax = list(url = action)), escape = FALSE)
-#  })
+  output$ziptable <- DT::renderDataTable({
+    stations_de
+  })
 }
