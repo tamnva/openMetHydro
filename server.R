@@ -118,7 +118,7 @@ function(input, output, session) {
       clearShapes() %>%
       addCircles(lat = ~latitude,
                  lng = ~longitude,
-                 #label = ~gauge_name, 
+                 label = ~gauged_name, 
                  group = "Gauging station",
                  fillColor = "#e2655d",
                  color = "#e2655d",
