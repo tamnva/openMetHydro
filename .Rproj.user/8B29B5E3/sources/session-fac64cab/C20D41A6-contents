@@ -130,7 +130,6 @@ function(input, output, session) {
   # Show a popup at the given location
   showZipcodePopup <- function(zipcode, lat, lng) {
     #selectedZip <- allzips[allzips$zipcode == zipcode,]
-    print(zipcode)
     content <- as.character(tagList(
       tags$h5("Gauged name:", zipcode),
       tags$strong(HTML(sprintf("%s, %s %s",999,999,999
@@ -146,8 +145,11 @@ function(input, output, session) {
   observe({
     leafletProxy("map") %>% clearPopups()
     event <- input$map_shape_click
-    if (is.null(event))
+    if (is.null(event$id)){
+      paste("THis is event:", event)
       return()
+    }
+      
 
     isolate({
       showZipcodePopup(event$id, event$lat, event$lng)
