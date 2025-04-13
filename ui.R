@@ -36,10 +36,10 @@ navbarPage(
         id = "controls", 
         class = "panel panel-default", 
         fixed = TRUE,
-        draggable = FALSE, 
-        top = 70, 
+        draggable = TRUE, 
+        top = 65, 
         left = "auto", 
-        right = 20, 
+        right = 10, 
         bottom = "auto",
         width = 300, 
         height = "auto",
@@ -49,7 +49,6 @@ navbarPage(
         selectInput("countries", 
                     "Select country", 
                     list("Germany", "US", "Switzerland")),
-        
         plotlyOutput(outputId = "histCentile", height = 200),
         plotOutput("scatterCollegeIncome", height = 250)
       )
