@@ -14,6 +14,8 @@ navbarPage(
   "Open weather & flood hub", 
   id="nav",
   
+
+  
   tabPanel(
     "Interactive map",
     
@@ -33,30 +35,33 @@ navbarPage(
       
       # Shiny versions prior to 0.11 should use class = "modal" instead.
       absolutePanel(
+
         id = "controls", 
         class = "panel panel-default", 
         fixed = TRUE,
         draggable = TRUE, 
-        top = 65, 
-        left = "auto", 
-        right = 10, 
+        top = 150, 
+        left = 10, 
+        right = "auto", 
         bottom = "auto",
-        width = 300, 
+        width = 400, 
         height = "auto",
+        cursor = "auto",
         
         h4("Weather & Streamflow Explorer"),
         
         selectInput("countries", 
                     "Select country", 
                     list("Germany", "US", "Switzerland")),
-        plotlyOutput(outputId = "histCentile", height = 200),
-        plotOutput("scatterCollegeIncome", height = 250)
+        
+        plotlyOutput(outputId = "time_series", height = 200),
+        plotlyOutput("histogram", height = 250, width = "50%"),
       )
     )
   ),
   
   tabPanel(
-    "Data explorer",
+    "Interactive plots",
     
     fluidRow(
       column(3,
@@ -67,7 +72,12 @@ navbarPage(
                          multiple=TRUE)
       )
     ),
+    
+    h4("thisi is plotly"),
+    #plotlyOutput(outputId = "histCentile1", height = 200),
+    
     hr(),
+    
     DT::dataTableOutput("ziptable")
   ),
   

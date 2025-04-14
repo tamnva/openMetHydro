@@ -36,6 +36,23 @@ function(input, output, session) {
       )  %>%
       setView(lng = 9, lat = 50, zoom = 4)
   })
+  
+#  observeEvent(input$countries, {
+#    if (input$countries == "Germany"){
+#      showModal(modalDialog(
+#        tagList(
+#          selectInput("deletefilename", label = "Delete a file", choices = list.files(pattern="*.txt"))
+#        ), 
+#        title="Download weather data and run rainfall-runoff model",
+#        footer = tagList(actionButton("confirmDelete", "Delete"),
+#                         modalButton("Cancel")
+#        )
+#      ))
+#    } else {
+#      showNotification("This is a notification other")
+#    }
+#    
+#  })
 
   # A reactive expression that returns the set of zips that are
   # in bounds right now
@@ -154,15 +171,30 @@ function(input, output, session) {
     isolate({
       showZipcodePopup(event$id, event$lat, event$lng)
       
-        output$histCentile <- renderPlotly({
-          plot_ly(data=mtcars, type='scatter', mode='markers', x=~hp, y=~mpg, name=~cyl)
+        output$time_series <- renderPlotly({
+          #plot_ly(data=streamflow_forecast %>% filter(object_id == event$id), 
+          #        type='scatter', mode='markers', x=~hp, y=~mpg, name=~cyl)
+          ggplotly(
+            ggplot(data = streamflow_forecast %>% 
+                     filter(object_id == event$id) %>%
+                     last(60)) +
+              geom_line(aes(x = time, y = q_mm_day), color = "#16a085") +
+              geom_point(aes(x = time, y = q_mm_day), color = "#16a085", 
+                         size = 1, alpha = 0.7) +
+              labs(x = " ") +
+              theme_bw()
+            )
         })
         
-        output$scatterCollegeIncome <- renderPlot({
-            ggplot(data.frame(value=rnorm(1000)), aes(x=value)) + 
-              geom_histogram()
-          # If no zipcodes are in view, don't plot
-          plot(c(1:100), c(1:100), xlab = event$id)
+        output$histogram <- renderPlotly({
+          ggplotly(
+            ggplot(data = streamflow_forecast %>% 
+                     filter(object_id == event$id) %>%
+                     last(60)) +
+              geom_boxplot(aes(y = q_mm_day), color = "#16a085") +
+              labs(x = " ") +
+              theme_bw()
+          )
         })
       
     })

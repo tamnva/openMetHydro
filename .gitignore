@@ -8,3 +8,5 @@ data/superzip.csv
 data/stations.rds
 data/-revisedmurrayfile_111952895138.xls
 data/deps.sh
+.Rproj.user
+*.csv
