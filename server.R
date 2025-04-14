@@ -135,12 +135,7 @@ function(input, output, session) {
                  fillOpacity = 0.5,
                  stroke = TRUE,
                  layerId = ~object_id
-      )  %>%
-      addPolygons(data = basins_de,
-                  group = "Basin shape",
-                  stroke = TRUE,
-                  weight = 1
-                  )
+      ) 
     #print(input$map_shape_click)
   })
 
@@ -166,8 +161,7 @@ function(input, output, session) {
       paste("THis is event:", event)
       return()
     }
-      
-
+    
     isolate({
       showZipcodePopup(event$id, event$lat, event$lng)
       
@@ -177,7 +171,7 @@ function(input, output, session) {
           ggplotly(
             ggplot(data = streamflow_forecast %>% 
                      filter(object_id == event$id) %>%
-                     last(60)) +
+                     last(input$last_n_days)) +
               geom_line(aes(x = time, y = q_mm_day), color = "#16a085") +
               geom_point(aes(x = time, y = q_mm_day), color = "#16a085", 
                          size = 1, alpha = 0.7) +
@@ -190,12 +184,21 @@ function(input, output, session) {
           ggplotly(
             ggplot(data = streamflow_forecast %>% 
                      filter(object_id == event$id) %>%
-                     last(60)) +
+                     last(input$last_n_days)) +
               geom_boxplot(aes(y = q_mm_day), color = "#16a085") +
               labs(x = " ") +
               theme_bw()
           )
         })
+        
+        
+        leafletProxy("map") %>%
+          addPolygons(data = st_geometry(subset(basins_de, gauge_id == event$id)),
+                      group = "Basin shape",
+                      stroke = TRUE,
+                      weight = 1,
+                      layerId = "basin_shape_id"
+          )
       
     })
   })

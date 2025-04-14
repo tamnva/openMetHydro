@@ -13,7 +13,7 @@ library(data.table)
 
 stations_de <- readRDS("data/germany/basins_stations/stations_de.rds")
 basins_de <- st_read("data/germany/basins_stations/basins_de.shp", quiet = TRUE)
-basins_de <- st_transform(basins_de, "+proj=longlat +datum=WGS84")[1:100,]
+basins_de <- st_transform(basins_de, "+proj=longlat +datum=WGS84")
 streamflow_forecast <- fread("data/germany/streamflow_forecast/streamflow_forecast.csv")
 
 # Load spatial data - using US basins shapefile from 'sf' package

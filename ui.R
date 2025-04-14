@@ -50,9 +50,19 @@ navbarPage(
         
         h4("Weather & Streamflow Explorer"),
         
+        # Select countries
         selectInput("countries", 
                     "Select country", 
                     list("Germany", "US", "Switzerland")),
+        
+        # Select last n simulation dates
+        numericInput(
+          inputId = "last_n_days",
+          label = "Select last n days",
+          value = "30",
+          min = 0,
+          width = '50%'
+        ),
         
         plotlyOutput(outputId = "time_series", height = 200),
         plotlyOutput("histogram", height = 250, width = "50%"),
@@ -63,6 +73,7 @@ navbarPage(
   tabPanel(
     "Interactive plots",
     
+    # Select countries
     fluidRow(
       column(3,
              selectInput("select_countries", 
@@ -73,6 +84,7 @@ navbarPage(
       )
     ),
     
+    # Select
     h4("thisi is plotly"),
     #plotlyOutput(outputId = "histCentile1", height = 200),
     
